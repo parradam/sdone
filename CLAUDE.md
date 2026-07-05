@@ -18,8 +18,16 @@ Sdone will provide capabilities for:
 
 ### Backend
 
+Framework: FastAPI
+Server: Uvicorn
+Database: SQLite
+Language: Python
+Linting/Type-checking: Ruff, mypy
+
 ### Frontend
 
+Templating: Jinja2
+Interactivity: HTMX
 Styling: Tailwind
 
 ### Miscellaneous
@@ -40,7 +48,7 @@ Funding: Initially self-funded, with the option of generating income via Buy Me 
 
 ## Development
 
-TBC
+- Use test-driven development
 
 ## Documentation
 
