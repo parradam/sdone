@@ -18,3 +18,25 @@ Format per entry:
 - **Decision** — what was chosen, stated plainly
 - **Alternatives** — what was rejected and why
 - **Consequences** — what this makes easier, harder, or locks us into
+
+---
+
+## ADR-001 — Sync SQLAlchemy over async
+
+- **Date** — 2026-07-11
+- **Status** — Accepted
+- **Context** — The backend needs a persistence layer. SQLAlchemy 2.0 offers
+  both a sync and an async API. Async would let route handlers `await` DB calls,
+  but it complicates the test harness (async fixtures, async sessions, an event
+  loop per test) and the engine/session wiring.
+- **Decision** — Use the sync SQLAlchemy 2.0 API. Sessions are injected into
+  route handlers via `Depends(get_db)`; handlers may be `def` or `async def`.
+- **Alternatives** — Async SQLAlchemy (`create_async_engine`, `AsyncSession`):
+  rejected because SQLite is the store and expected load is low, so the async
+  benefit is marginal, while the fixture and wiring cost is real. FastAPI runs
+  sync routes in a threadpool, so a blocking DB call does not block the event
+  loop.
+- **Consequences** — Simpler engine/session setup and straightforward
+  transactional test fixtures. If we later outgrow SQLite and need genuine async
+  I/O throughput, migrating to the async API will require reworking the session
+  dependency and tests; a new ADR would supersede this one.

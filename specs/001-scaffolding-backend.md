@@ -1,6 +1,6 @@
 # Spec: Backend scaffolding
 
-**Status:** Ready
+**Status:** Done
 **Spec ID:** 001
 **Owner:** Adam
 **Related:** ARCHITECTURE.md, CLAUDE.md, DECISIONS.md
@@ -139,21 +139,21 @@ Error envelope (used by `AppError` handler and any future 4xx/5xx):
 
 ## Acceptance criteria
 
-- [ ] `uv sync` installs `sqlalchemy`, `alembic`, `pydantic-settings`, `pytest`, `httpx`.
-- [ ] `uv run uvicorn app.main:app` boots without errors against a fresh SQLite file.
-- [ ] `uv run alembic revision --autogenerate -m "init"` produces a valid (empty) migration;
+- [x] `uv sync` installs `sqlalchemy`, `alembic`, `pydantic-settings`, `pytest`, `httpx`.
+- [x] `uv run uvicorn app.main:app` boots without errors against a fresh SQLite file.
+- [x] `uv run alembic revision --autogenerate -m "init"` produces a valid (empty) migration;
       `uv run alembic upgrade head` applies it.
-- [ ] `uv run pytest` passes; no `sdone.db` artefact is created by the test run.
-- [ ] `GET /health` returns `{"status":"ok","db":"ok"}` in the happy path
+- [x] `uv run pytest` passes; no `sdone.db` artefact is created by the test run.
+- [x] `GET /health` returns `{"status":"ok","db":"ok"}` in the happy path
       (integration test via `TestClient`) and 503 with the error envelope
       when the DB dependency raises.
-- [ ] `Settings` loads values from `.env` — test monkeypatches
+- [x] `Settings` loads values from `.env` — test monkeypatches
       `SDONE_DATABASE_URL` and asserts the override is picked up.
-- [ ] `.env` is gitignored; `.env.example` is committed.
-- [ ] `uv run ruff check` and `uv run mypy .` pass on all new code.
-- [ ] `DECISIONS.md` contains an ADR entry for sync-vs-async SQLAlchemy.
-- [ ] `ARCHITECTURE.md` reflects the new module layout.
-- [ ] `backend/README.md` documents run, test, and migrate commands.
+- [x] `.env` is gitignored; `.env.example` is committed.
+- [x] `uv run ruff check` and `uv run mypy .` pass on all new code.
+- [x] `DECISIONS.md` contains an ADR entry for sync-vs-async SQLAlchemy.
+- [x] `ARCHITECTURE.md` reflects the new module layout.
+- [x] `backend/README.md` documents run, test, and migrate commands.
 
 ## Open questions
 
