@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sdone — App shell mockups (002)</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Literata:opsz,wght@7..72,500;7..72,600&display=swap');
+    :root { --bg: oklch(0.98 0.006 90); --ink: oklch(0.30 0.013 75); --faint: oklch(0.58 0.012 80); --line: oklch(0.9 0.008 90); }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Hanken Grotesk", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    .wrap { max-width: 60rem; margin: 0 auto; padding: clamp(2rem, 6vw, 5rem) 1.5rem; }
+    h1 { font-family: Literata, serif; font-weight: 600; font-size: clamp(1.9rem, 4vw, 2.6rem); letter-spacing: -0.01em; margin: 0 0 .5rem; }
+    .lede { color: var(--faint); max-width: 46ch; line-height: 1.6; margin: 0 0 2.5rem; }
+    .grid { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+    a.card { display: flex; flex-direction: column; gap: .5rem; padding: 1.25rem; border: 1px solid var(--line); border-radius: 1rem; background: oklch(0.997 0.003 95); text-decoration: none; color: inherit; transition: transform .25s cubic-bezier(.22,1,.36,1), border-color .25s; }
+    a.card:hover { transform: translateY(-3px); border-color: oklch(0.575 0.058 152); }
+    .swatch { display: flex; gap: .35rem; margin-bottom: .35rem; }
+    .swatch span { width: 1.4rem; height: 1.4rem; border-radius: .5rem; border: 1px solid rgba(0,0,0,.06); }
+    .num { font-family: Literata, serif; color: var(--faint); font-size: .85rem; }
+    .name { font-family: Literata, serif; font-weight: 600; font-size: 1.15rem; }
+    .meta { color: var(--faint); font-size: .85rem; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="num">Spec 002 · design exploration</p>
+    <h1>App shell mockups</h1>
+    <p class="lede">Three static explorations of the Sdone app shell — nav, header, footer and base layout — pairing both navigation layouts with each colour mood. Calm, minimal, low-friction. Open each standalone.</p>
+
+    <div class="grid">
+      <a class="card" href="01-sidebar-cool-slate.html">
+        <span class="swatch"><span style="background:oklch(0.985 0.004 240)"></span><span style="background:oklch(0.545 0.087 249)"></span><span style="background:oklch(0.31 0.021 252)"></span></span>
+        <span class="num">01 · chosen</span>
+        <span class="name">Sidebar · Cool slate</span>
+        <span class="meta">The adopted direction. Left icon+label rail, cool white with a calm slate-blue accent.</span>
+      </a>
+      <a class="card" href="02-topnav-cool-slate.html">
+        <span class="swatch"><span style="background:oklch(0.985 0.004 240)"></span><span style="background:oklch(0.545 0.087 249)"></span><span style="background:oklch(0.31 0.021 252)"></span></span>
+        <span class="num">02</span>
+        <span class="name">Top nav · Cool slate</span>
+        <span class="meta">Horizontal bar, centred column. Clean and quietly professional.</span>
+      </a>
+      <a class="card" href="03-sidebar-paper-terracotta.html">
+        <span class="swatch"><span style="background:oklch(0.974 0.011 74)"></span><span style="background:oklch(0.605 0.118 46)"></span><span style="background:oklch(0.275 0.015 52)"></span></span>
+        <span class="num">03</span>
+        <span class="name">Sidebar · Paper terracotta</span>
+        <span class="meta">Same rail as 01, warm paper with a clay accent for personality.</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sdone — App shell · Top nav / Cool slate</title>
+
+  <!-- Tailwind via CDN (mockup only, per spec 002) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Hanken Grotesk"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            serif: ['Literata', 'ui-serif', 'Georgia', 'serif'],
+          },
+          colors: {
+            bg: 'var(--bg)',
+            surface: 'var(--surface)',
+            sunk: 'var(--surface-sunk)',
+            ink: 'var(--ink)',
+            'ink-soft': 'var(--ink-soft)',
+            'ink-faint': 'var(--ink-faint)',
+            line: 'var(--line)',
+            accent: 'var(--accent)',
+            'accent-soft': 'var(--accent-soft)',
+            'accent-ink': 'var(--accent-ink)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap');
+
+    :root {
+      /* Cool neutral + slate blue — light, OKLCH, neutrals tinted cool */
+      --bg: oklch(0.985 0.004 240);
+      --surface: oklch(0.999 0.002 240);
+      --surface-sunk: oklch(0.960 0.006 240);
+      --ink: oklch(0.31 0.021 252);
+      --ink-soft: oklch(0.47 0.019 250);
+      --ink-faint: oklch(0.60 0.014 250);
+      --line: oklch(0.902 0.010 245);
+      --accent: oklch(0.545 0.087 249);
+      --accent-soft: oklch(0.945 0.031 248);
+      --accent-ink: oklch(0.44 0.092 250);
+    }
+
+    html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    body { font-feature-settings: "ss01", "cv01"; }
+
+    .scroll-quiet { scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+    .scroll-quiet::-webkit-scrollbar { width: 10px; }
+    .scroll-quiet::-webkit-scrollbar-thumb { background: var(--line); border-radius: 99px; border: 3px solid var(--bg); }
+
+    @keyframes breathe { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .55; transform: scale(.82); } }
+    .pulse { animation: breathe 2.4s ease-in-out infinite; }
+
+    @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .rise { animation: rise .5s cubic-bezier(.22,1,.36,1) both; }
+
+    /* Top-nav active tab indicator */
+    .navlink { position: relative; }
+    .navlink[aria-current="page"]::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: -1.05rem; height: 2px;
+      background: var(--accent); border-radius: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .pulse, .rise { animation: none; }
+      * { scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+
+<body class="flex h-full flex-col bg-bg font-sans text-ink antialiased">
+
+  <!-- ============ TOP NAV ============ -->
+  <header class="sticky top-0 z-20 border-b border-line bg-bg/85 backdrop-blur-sm">
+    <div class="mx-auto flex h-16 max-w-6xl items-center gap-6 px-6">
+      <!-- Brand -->
+      <a href="#" class="flex items-center gap-2.5">
+        <span class="grid h-8 w-8 place-items-center rounded-lg bg-accent text-[0.95rem] font-semibold text-white" style="font-family: Literata, serif;">S</span>
+        <span class="font-serif text-[1.35rem] font-semibold leading-none tracking-tight">Sdone</span>
+      </a>
+
+      <!-- Primary nav -->
+      <nav class="hidden items-center gap-6 text-sm font-medium md:flex">
+        <a href="#" aria-current="page" class="navlink text-ink">Today</a>
+        <a href="#" class="navlink text-ink-soft transition-colors hover:text-ink">Tasks</a>
+        <a href="#" class="navlink text-ink-soft transition-colors hover:text-ink">Calendar</a>
+        <a href="#" class="navlink text-ink-soft transition-colors hover:text-ink">Journal</a>
+        <span class="h-4 w-px bg-line"></span>
+        <a href="#" class="navlink text-ink-soft transition-colors hover:text-ink">Achievements</a>
+        <a href="#" class="navlink text-ink-soft transition-colors hover:text-ink">Stats</a>
+        <a href="#" class="navlink hidden text-ink-soft transition-colors hover:text-ink lg:inline">Resources</a>
+      </nav>
+
+      <!-- Actions -->
+      <div class="ml-auto flex items-center gap-2.5">
+        <button aria-label="Search" class="hidden items-center gap-2 rounded-lg border border-line bg-surface px-3 py-2 text-sm text-ink-faint transition-colors hover:text-ink-soft sm:flex">
+          <svg class="h-[1.05rem] w-[1.05rem]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
+          <kbd class="rounded border border-line bg-bg px-1.5 py-0.5 text-[0.68rem]">⌘K</kbd>
+        </button>
+        <button class="hidden rounded-lg px-3 py-2 text-sm font-medium text-ink-soft transition-colors hover:bg-sunk hover:text-ink sm:block">Log a note</button>
+        <button class="flex items-center gap-2 rounded-lg bg-accent px-3.5 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:-translate-y-px active:translate-y-0">
+          <svg class="h-[1.05rem] w-[1.05rem]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 4 20 12 6 20 6 4" fill="currentColor" stroke="none"/></svg>
+          <span class="hidden sm:inline">Start session</span>
+        </button>
+        <a href="#" aria-label="Account" class="grid h-9 w-9 place-items-center rounded-full bg-accent-soft text-[0.8rem] font-semibold text-accent-ink transition-transform hover:-translate-y-px">AP</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ CONTENT ============ -->
+  <main class="scroll-quiet flex-1 overflow-y-auto">
+    <div class="mx-auto max-w-6xl px-6 py-9">
+
+      <!-- Page header -->
+      <div class="rise mb-8 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="text-sm font-medium uppercase tracking-[0.12em] text-ink-faint">Thursday, 9 July 2026</p>
+          <h1 class="mt-1.5 font-serif text-[2.1rem] font-semibold leading-none tracking-tight">Good morning, Adam</h1>
+        </div>
+        <p class="font-serif text-lg text-ink-soft">Five tasks lined up · one in flight</p>
+      </div>
+
+      <!-- Running session (the one loud thing) -->
+      <section class="rise mb-9 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl bg-accent-soft p-5" style="animation-delay:.05s">
+        <span class="grid h-2.5 w-2.5 place-items-center"><span class="pulse h-2.5 w-2.5 rounded-full bg-accent"></span></span>
+        <div class="min-w-0 flex-1">
+          <p class="text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-accent-ink">In session · Deep work</p>
+          <p class="mt-1 truncate font-serif text-lg font-medium text-ink">Rewrite the onboarding email</p>
+        </div>
+        <p class="font-serif text-3xl font-semibold tabular-nums text-accent-ink">42:18</p>
+        <div class="flex items-center gap-2">
+          <button class="rounded-lg border border-accent-ink/25 bg-surface/70 px-3 py-2 text-sm font-medium text-accent-ink transition-colors hover:bg-surface">Pause</button>
+          <button class="rounded-lg bg-accent-ink px-3 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90">Finish</button>
+        </div>
+      </section>
+
+      <!-- Two-column editorial body -->
+      <div class="grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-[minmax(0,1fr)_19rem]">
+
+        <!-- Up next -->
+        <section class="rise" style="animation-delay:.1s">
+          <div class="mb-3 flex items-baseline justify-between">
+            <h2 class="font-serif text-xl font-semibold">Up next</h2>
+            <a href="#" class="text-sm font-medium text-accent-ink hover:underline">All tasks</a>
+          </div>
+          <ul class="divide-y divide-line overflow-hidden rounded-xl border border-line bg-surface">
+            <li class="group flex items-center gap-3.5 px-4 py-3.5 transition-colors hover:bg-sunk/60">
+              <button aria-label="Complete task" class="h-5 w-5 shrink-0 rounded-full border-[1.5px] border-line transition-colors group-hover:border-accent"></button>
+              <span class="min-w-0 flex-1 truncate text-[0.95rem]">Review Q3 goals draft</span>
+              <span class="rounded-md bg-sunk px-2 py-0.5 text-[0.72rem] font-medium text-ink-soft">Admin</span>
+              <span class="w-12 text-right text-[0.8rem] tabular-nums text-ink-faint">15m</span>
+            </li>
+            <li class="group flex items-center gap-3.5 bg-accent-soft/40 px-4 py-3.5">
+              <span aria-hidden="true" class="grid h-5 w-5 shrink-0 place-items-center rounded-full border-[1.5px] border-accent"><span class="pulse h-2 w-2 rounded-full bg-accent"></span></span>
+              <span class="min-w-0 flex-1 truncate text-[0.95rem] font-medium">Rewrite the onboarding email</span>
+              <span class="rounded-md bg-accent-soft px-2 py-0.5 text-[0.72rem] font-medium text-accent-ink">Writing</span>
+              <span class="w-12 text-right text-[0.8rem] font-medium tabular-nums text-accent-ink">now</span>
+            </li>
+            <li class="group flex items-center gap-3.5 px-4 py-3.5 transition-colors hover:bg-sunk/60">
+              <button aria-label="Complete task" class="h-5 w-5 shrink-0 rounded-full border-[1.5px] border-line transition-colors group-hover:border-accent"></button>
+              <span class="min-w-0 flex-1 truncate text-[0.95rem]">Fix the calendar sync bug</span>
+              <span class="rounded-md bg-sunk px-2 py-0.5 text-[0.72rem] font-medium text-ink-soft">Code</span>
+              <span class="w-12 text-right text-[0.8rem] tabular-nums text-ink-faint">45m</span>
+            </li>
+            <li class="group flex items-center gap-3.5 px-4 py-3.5 transition-colors hover:bg-sunk/60">
+              <button aria-label="Complete task" class="h-5 w-5 shrink-0 rounded-full border-[1.5px] border-line transition-colors group-hover:border-accent"></button>
+              <span class="min-w-0 flex-1 truncate text-[0.95rem]">Read <span class="italic">Shape Up</span>, chapter 4</span>
+              <span class="rounded-md bg-sunk px-2 py-0.5 text-[0.72rem] font-medium text-ink-soft">Learning</span>
+              <span class="w-12 text-right text-[0.8rem] tabular-nums text-ink-faint">20m</span>
+            </li>
+            <li class="group flex items-center gap-3.5 px-4 py-3.5 transition-colors hover:bg-sunk/60">
+              <button aria-label="Complete task" class="h-5 w-5 shrink-0 rounded-full border-[1.5px] border-line transition-colors group-hover:border-accent"></button>
+              <span class="min-w-0 flex-1 truncate text-[0.95rem]">Call the dentist to reschedule</span>
+              <span class="rounded-md bg-sunk px-2 py-0.5 text-[0.72rem] font-medium text-ink-soft">Errand</span>
+              <span class="w-12 text-right text-[0.8rem] tabular-nums text-ink-faint">—</span>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Right rail -->
+        <aside class="flex flex-col gap-9">
+          <section class="rise" style="animation-delay:.16s">
+            <h2 class="mb-3 font-serif text-xl font-semibold">This week</h2>
+            <dl class="grid grid-cols-2 gap-x-4 gap-y-4">
+              <div><dt class="text-[0.78rem] text-ink-faint">Focus time</dt><dd class="mt-0.5 font-serif text-2xl font-semibold tabular-nums">11h 20m</dd></div>
+              <div><dt class="text-[0.78rem] text-ink-faint">Sessions</dt><dd class="mt-0.5 font-serif text-2xl font-semibold tabular-nums">18</dd></div>
+              <div><dt class="text-[0.78rem] text-ink-faint">Tasks done</dt><dd class="mt-0.5 font-serif text-2xl font-semibold tabular-nums">27</dd></div>
+              <div><dt class="text-[0.78rem] text-ink-faint">Day streak</dt><dd class="mt-0.5 font-serif text-2xl font-semibold tabular-nums">6</dd></div>
+            </dl>
+          </section>
+
+          <section class="rise" style="animation-delay:.22s">
+            <div class="mb-3 flex items-baseline justify-between">
+              <h2 class="font-serif text-xl font-semibold">Just noted</h2>
+              <a href="#" class="text-sm font-medium text-accent-ink hover:underline">Journal</a>
+            </div>
+            <ol class="flex flex-col gap-4">
+              <li>
+                <p class="text-[0.72rem] tabular-nums text-ink-faint">11:02</p>
+                <p class="mt-1 font-serif text-[0.95rem] leading-relaxed text-ink-soft">Onboarding copy felt stiff — switching to second person made it read warmer. Keep that voice everywhere.</p>
+              </li>
+              <li>
+                <p class="text-[0.72rem] tabular-nums text-ink-faint">09:40</p>
+                <p class="mt-1 font-serif text-[0.95rem] leading-relaxed text-ink-soft">Interrupted by the calendar bug mid-write. Parked the thought here so I could get back to it.</p>
+              </li>
+            </ol>
+          </section>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-line">
+    <div class="mx-auto flex max-w-6xl items-center gap-4 px-6 py-3 text-[0.78rem] text-ink-faint">
+      <span class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-accent"></span> All changes saved</span>
+      <span class="ml-auto">Sdone · v0.1 mockup</span>
+    </div>
+  </footer>
+</body>
+</html>
