@@ -5,15 +5,24 @@ description = "Backend"
 readme = "README.md"
 requires-python = "==3.14.*"
 dependencies = [
+    "alembic==1.18.5",
     "fastapi[standard]==0.139.0",
+    "pydantic-settings==2.14.2",
+    "sqlalchemy==2.0.51",
     "uvicorn==0.50.0",
 ]
 
 [dependency-groups]
 dev = [
+    "httpx==0.28.1",
     "mypy==2.1.0",
+    "pytest==9.1.1",
     "ruff==0.15.20",
 ]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
 
 [tool.mypy]
 python_version = "3.14"
@@ -36,3 +45,7 @@ ignore = [
 
 [tool.ruff.lint.per-file-ignores]
 "**/test_*.py" = ["S101"] # disable assert warning for test files
+
+[tool.ruff.lint.flake8-bugbear]
+# FastAPI relies on function-call defaults for dependency injection.
+extend-immutable-calls = ["fastapi.Depends"]
