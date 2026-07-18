@@ -9,5 +9,9 @@ __pycache__/
 # SQLite database files
 *.db
 
+# Node / frontend build
+node_modules/
+backend/app/static/app.css
+
 # macOS
 .DS_Store

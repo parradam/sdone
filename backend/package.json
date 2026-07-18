@@ -1,0 +1,13 @@
+{
+  "name": "sdone-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Frontend asset build for the Sdone app shell (Tailwind CSS).",
+  "scripts": {
+    "build:css": "tailwindcss -i ./app/static/css/input.css -o ./app/static/app.css --minify",
+    "watch:css": "tailwindcss -i ./app/static/css/input.css -o ./app/static/app.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}
