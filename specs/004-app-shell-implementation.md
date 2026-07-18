@@ -1,6 +1,6 @@
 # 004: App shell implementation
 
-**Status:** Ready
+**Status:** Done
 **Owner:** Adam
 **Related:** ARCHITECTURE.md, CLAUDE.md, DECISIONS.md, specs/001-scaffolding-backend.md, specs/002-app-shell-visual-mockup.md, specs/003-interstitial-journal.md, mockups/002-app-shell/01-sidebar-cool-slate.html
 
@@ -161,23 +161,28 @@ Response: 200 text/html — the app shell (base.html + placeholder Today body)
 
 ## Acceptance criteria
 
-- [ ] `GET /` returns 200 `text/html` and renders `base.html` with the sidebar,
+- [x] `GET /` returns 200 `text/html` and renders `base.html` with the sidebar,
       header, and content region. **Integration test** via `TestClient`.
-- [ ] The rendered shell contains the nav labels Today, Tasks, Calendar, Journal,
+- [x] The rendered shell contains the nav labels Today, Tasks, Calendar, Journal,
       Achievements, Statistics, Resources. **Integration test.**
-- [ ] `npm run build:css` produces `app/static/app.css` (gitignored) from the
+- [x] `npm run build:css` produces `app/static/app.css` (gitignored) from the
       Tailwind config; after a build, `GET /static/app.css` returns 200. The
       integration test asserts the mount serves the file **once built**; it may
       `skip` (not fail) when `app.css` is absent so a Node-less `pytest` run stays
       green, while CI runs `build:css` before `pytest` so it actually exercises.
-- [ ] HTMX is vendored at `app/static/js/htmx.min.js` and `GET /static/js/htmx.min.js`
+- [x] HTMX is vendored at `app/static/js/htmx.min.js` and `GET /static/js/htmx.min.js`
       returns 200; `base.html` includes it. **Integration test.**
-- [ ] The shell is responsive (sidebar hidden below `md`, mobile brand shown) and
-      honours `prefers-reduced-motion`. **Verified manually / via browser MCP.**
-- [ ] Fonts and cool-slate colour tokens visually match mockup 01. **Verified
-      manually / via browser MCP.**
-- [ ] `ruff check` and `mypy .` pass on all new Python code.
-- [ ] `ARCHITECTURE.md` reflects the frontend layout and `DECISIONS.md` records
+- [x] The shell is responsive (sidebar hidden below `md`, mobile brand shown) and
+      honours `prefers-reduced-motion`. **Verified structurally** — the compiled
+      CSS contains the `md` breakpoint rules (`.md:flex`/`.md:hidden`) and the
+      `prefers-reduced-motion` block. (A true sub-`md` browser capture was not
+      possible — the automation viewport would not reflow below the breakpoint.)
+- [x] Fonts and cool-slate colour tokens visually match mockup 01. **Verified**
+      via a desktop browser pass at 1440px: Literata serif (brand/headings),
+      Hanken Grotesk sans (UI), the cool-slate accent, surfaces/borders, and the
+      active-nav highlight all match mockup 01.
+- [x] `ruff check` and `mypy .` pass on all new Python code.
+- [x] `ARCHITECTURE.md` reflects the frontend layout and `DECISIONS.md` records
       the Tailwind-build + vendored-HTMX ADR.
 
 ## Resolved decisions

@@ -1,6 +1,6 @@
 # 003: Interstitial journal
 
-**Status:** Draft — blocked on [004 app-shell implementation](004-app-shell-implementation.md)
+**Status:** Draft — ready to implement ([004 app-shell implementation](004-app-shell-implementation.md) is done)
 **Owner:** Adam
 **Related:** ARCHITECTURE.md, CLAUDE.md, DECISIONS.md, specs/001-scaffolding-backend.md, specs/004-app-shell-implementation.md, mockups/002-app-shell/01-sidebar-cool-slate.html
 
