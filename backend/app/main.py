@@ -1,6 +1,8 @@
+from pathlib import Path
 from typing import Annotated
 
 from fastapi import Depends, FastAPI
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
@@ -8,11 +10,16 @@ from sqlalchemy.orm import Session
 from app.core.errors import AppError, app_error_handler
 from app.core.logging import configure_logging
 from app.db.session import get_db
+from app.routers import pages
 
 configure_logging()
 
+STATIC_DIR = Path(__file__).resolve().parent / "static"
+
 app = FastAPI(title="Sdone")
 app.add_exception_handler(AppError, app_error_handler)
+app.include_router(pages.router)
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 DbSession = Annotated[Session, Depends(get_db)]
 
