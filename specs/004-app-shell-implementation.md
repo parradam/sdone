@@ -203,8 +203,13 @@ Response: 200 text/html — the app shell (base.html + placeholder Today body)
 
 ## Open questions
 
-- None outstanding. Revisit committing built assets (vs building in CI) once a CI
-  pipeline exists.
+- Revisit committing built assets (vs building in CI) once a CI pipeline exists.
+- **Header date timezone.** The placeholder header renders
+  `datetime.now(tz=UTC)`, so the date reflects UTC, not the viewer's local day
+  (e.g. a UK/BST viewer in the early hours sees the previous day). Deferred to
+  the Today-page spec, which must choose a timezone strategy — a configured app
+  timezone in `Settings`, client-side rendering from the browser clock, or
+  server-local `datetime.now().astimezone()`.
 
 ## Implementation plan
 
