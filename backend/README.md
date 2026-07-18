@@ -7,6 +7,7 @@ This is the FastAPI backend.
 
 - Python 3.14
 - [uv](https://docs.astral.sh/uv/) for dependency management
+- Node.js + npm (for the Tailwind CSS build)
 
 ## Setup
 
@@ -17,6 +18,21 @@ cp .env.example .env   # then edit as needed
 
 Configuration is read from `.env` (variables use the `SDONE_` prefix). See
 `.env.example` for the available settings.
+
+## Frontend assets
+
+The UI is server-rendered Jinja2 templates styled with a compiled Tailwind CSS
+build. The built stylesheet (`app/static/app.css`) is **gitignored**, so build
+it before running the app (and in CI before the tests):
+
+```sh
+npm install          # once, installs the Tailwind CLI
+npm run build:css    # compile app/static/css/input.css -> app/static/app.css
+npm run watch:css    # optional: rebuild on template/JS changes during dev
+```
+
+Without the build the pages still render, just unstyled. HTMX is vendored at
+`app/static/js/htmx.min.js` (no runtime CDN).
 
 ## Run
 

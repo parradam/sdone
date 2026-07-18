@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Cool neutral + slate blue — light, OKLCH, neutrals tinted cool */
+  --bg: oklch(0.985 0.004 240);
+  --surface: oklch(0.999 0.002 240);
+  --surface-sunk: oklch(0.96 0.006 240);
+  --ink: oklch(0.31 0.021 252);
+  --ink-soft: oklch(0.47 0.019 250);
+  --ink-faint: oklch(0.6 0.014 250);
+  --line: oklch(0.902 0.01 245);
+  --accent: oklch(0.545 0.087 249);
+  --accent-soft: oklch(0.945 0.031 248);
+  --accent-ink: oklch(0.44 0.092 250);
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-feature-settings: "ss01", "cv01";
+}
+
+/* Quiet, thin scrollbars for the main scroll region */
+.scroll-quiet {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+.scroll-quiet::-webkit-scrollbar {
+  width: 10px;
+}
+.scroll-quiet::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 99px;
+  border: 3px solid var(--bg);
+}
+
+/* Calm motion — a slow breathing pulse and a gentle rise-in */
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(0.82);
+  }
+}
+.pulse {
+  animation: breathe 2.4s ease-in-out infinite;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.rise {
+  animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse,
+  .rise {
+    animation: none;
+  }
+  * {
+    scroll-behavior: auto !important;
+  }
+}
