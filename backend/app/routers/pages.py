@@ -3,15 +3,11 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
-from typing import TYPE_CHECKING
 
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 
 from app.templating import templates
-
-if TYPE_CHECKING:
-    from starlette.templating import _TemplateResponse
 
 router = APIRouter()
 
@@ -23,8 +19,13 @@ def _today_label() -> str:
 
 
 @router.get("/", response_class=HTMLResponse)
-def today(request: Request) -> _TemplateResponse:
-    """Render the app shell with the placeholder Today page."""
+def today(request: Request) -> HTMLResponse:
+    """Render the app shell with the placeholder Today page.
+
+    Annotated ``-> HTMLResponse`` (the runtime base class of Jinja2's
+    ``_TemplateResponse``) so FastAPI treats it as a Response and does not try
+    to build an OpenAPI schema from the return type.
+    """
     return templates.TemplateResponse(
         request,
         "pages/today.html",

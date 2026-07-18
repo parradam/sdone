@@ -54,3 +54,11 @@ def test_htmx_vendored_and_served(client: TestClient) -> None:
 def test_home_includes_htmx(client: TestClient) -> None:
     response = client.get("/")
     assert "/static/js/htmx.min.js" in response.text
+
+
+def test_openapi_schema_available(client: TestClient) -> None:
+    # Regression: an HTML page route annotated with an unresolved response type
+    # used to break OpenAPI schema generation.
+    response = client.get("/openapi.json")
+    assert response.status_code == HTTPStatus.OK
+    assert response.json()["openapi"]
